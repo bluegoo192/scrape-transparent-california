@@ -1,0 +1,21 @@
+{
+  "name": "scrape-transparent-california",
+  "version": "1.0.0",
+  "description": "",
+  "main": "scrape.js",
+  "scripts": {
+    "scrape": "node ./scrape.js",
+    "watch": "./node_modules/.bin/onchange -i -k './scrape.js' -- node ./scrape.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "accounting": "^0.4.1",
+    "cheerio": "^1.0.0-rc.3",
+    "jsdom": "^16.2.2",
+    "node-fetch": "^2.6.0",
+    "onchange": "^7.0.2",
+    "simple-statistics": "^7.1.0"
+  }
+}
