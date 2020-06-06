@@ -10,7 +10,7 @@ Also includes simple filesystem caching so we don't overload their servers. Alwa
 
 1. Clone repo, make sure a modern version of node is installed
 2. `npm install`
-3. `npm run scrape`
+3. `npm run scrape`. You can add an option parameter for your query (make sure to put it in quotes), otherwise it'll default to 'police officer'
 
 ### Results from my last run
 
@@ -25,6 +25,7 @@ Found a cache entry for page 51
 Finished! Total rows: 2500
 Number of entries for San Jose: 482
 ====  RESULTS  ====
+Query was police officer
 Mean comp $347,230.00
 Median comp $348,609.00
 ```

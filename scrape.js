@@ -4,14 +4,7 @@ const fs = require('fs');
 const stats = require('simple-statistics');
 const accounting = require('accounting');
 
-const scrapedFieldsByIndex = [
-  'name',
-  'title',
-  'pay',
-  'total pay',
-  'benefits',
-  'total comp'
-];
+const query = process.argv[2] || 'police officer';
 
 async function extractFields(cheerioRowObject) {
   return cheerioRowObject.find('td')
@@ -26,7 +19,8 @@ async function extractFields(cheerioRowObject) {
 }
 
 function getCachePath(pageNumber) {
-  return `./cache/page${pageNumber}.json`;
+  const queryAsKey = query.replace(/\s+/g, '');
+  return `./cache/${queryAsKey}_page${pageNumber}.json`;
 }
 
 async function scrapePage(number) {
@@ -41,12 +35,11 @@ async function scrapePage(number) {
       fromCache: true,
     };
   } catch (err) {
-    console.error(err);
     console.log('Cache miss on page', number);
   }
 
-
-  const response = await fetch(`https://transparentcalifornia.com/salaries/search/?q=police+officer&y=2019&page=${number}`);
+  const formattedQuery = query.replace(/\s+/g, '+');
+  const response = await fetch(`https://transparentcalifornia.com/salaries/search/?q=${formattedQuery}&y=2019&page=${number}`);
     const html = await response.text();
     const parsedHtml = cheerio.load(html, {
       normalizeWhitespace: true
@@ -116,6 +109,7 @@ async function analyze() {
   const median = stats.median(sanJoseRawComps);
 
   console.log('====  RESULTS  ====');
+  console.log('Query was ', query);
   console.log('Mean comp', toDollars(Math.round(mean)));
   console.log('Median comp', toDollars(Math.round(median)));
 }
